@@ -5,6 +5,35 @@ import android.view.View;
 public class MyPlace {
     String name;
     String description;
+    String longitude;
+    String latitude;
+    int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setId(int ID){
+        this.ID = ID;
+    }
+
+
+    public String getLongitude(){
+        return longitude;
+    }
+
+    public void setLongitude(String longitude){
+        this.longitude = longitude;
+    }
+
+    public String getLatitude(){
+        return latitude;
+    }
+
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
+    }
+
 
     public MyPlace(String nme, String desc) {
         this.name = nme;

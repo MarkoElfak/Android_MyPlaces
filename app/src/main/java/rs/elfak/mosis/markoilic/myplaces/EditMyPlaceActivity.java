@@ -46,7 +46,7 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         final Button finishedButton = (Button)findViewById(R.id.editmyplace_finished_button);
-        Button cancelButton = (Button)findViewById(R.id.editmtplace_cancel_button);
+        Button cancelButton = (Button)findViewById(R.id.editmyplace_cancel_button);
         EditText nameEditText = (EditText)findViewById(R.id.editmyplace_name_edit);
 
         if(!editMode) {
@@ -78,7 +78,8 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
                 finishedButton.setEnabled(editable.length()>0);
             }
         });
-        
+        Button locationButton = (Button)findViewById(R.id.editmyplace_location_button);
+        locationButton.setOnClickListener(this);
     }
 
     @Override
@@ -98,26 +99,39 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
                 String nme = etName.getText().toString();
                 EditText etDesc = (EditText) findViewById(R.id.editmyplace_desc_edit);
                 String desc = etDesc.getText().toString();
+                EditText latEdit = findViewById(R.id.editmyplace_lat_edit);
+                String lat = latEdit.getText().toString();
+                EditText lonEdit = findViewById(R.id.editmyplace_lon_edit);
+                String lon = lonEdit.getText().toString();
                 if(!editMode) {
                     MyPlace place = new MyPlace(nme, desc);
+                    place.setLatitude(lat);
+                    place.setLongitude(lon);
                     MyPlacesData.getInstance().addNewPlace(place);
                 } else {
                     MyPlace place = MyPlacesData.getInstance().getPlace(position);
                     place.setName(nme);
                     place.setDescription(desc);
+                    place.setLongitude(lon);
+                    place.setLatitude(lat);
                 }
                 setResult(Activity.RESULT_OK);
                 finish();
                 break;
-            }
-
-            case R.id.editmtplace_cancel_button: {
+            } case R.id.editmyplace_cancel_button: {
                 setResult(Activity.RESULT_CANCELED);
                 finish();
                 break;
             }
+
+            case R.id.editmyplace_location_button: {
+                Intent i = new Intent(this, MyPlacesMapsActivity.class);
+                i.putExtra("state", MyPlacesMapsActivity.SELECT_COORDINATES);
+                startActivityForResult(i, 1);
+            }
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -138,14 +152,34 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == Activity.RESULT_OK)
+//        {
+//            ListView myPlacesList = (ListView)findViewById(R.id.my_places_list);
+//            myPlacesList.setAdapter(new ArrayAdapter<MyPlace>(this, android.R.layout.simple_list_item_1, MyPlacesData.getInstance().getMyPlaces()));
+//        }
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-        {
-            ListView myPlacesList = (ListView)findViewById(R.id.my_places_list);
-            myPlacesList.setAdapter(new ArrayAdapter<MyPlace>(this, android.R.layout.simple_list_item_1, MyPlacesData.getInstance().getMyPlaces()));
+        try {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                String lon = data.getExtras().getString("lon");
+                EditText lonText = (EditText)findViewById(R.id.editmyplace_lon_edit);
+                lonText.setText(lon);
+                String lat = data.getExtras().getString("lat");
+                EditText latText = (EditText)findViewById(R.id.editmyplace_lat_edit);
+                latText.setText(lat);
+            }
+        }
+        catch (Exception e) {
+            // TODO: handle exception
         }
     }
 }
