@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1077887368315",
+    "project_id": "my-places-e4bc1",
+    "storage_bucket": "my-places-e4bc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077887368315:android:a80eff30f44393721336de",
+        "android_client_info": {
+          "package_name": "rs.elfak.mosis.markoilic.myplaces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077887368315-kf2mv79higd0c5ap8tadetd9qk8ts519.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBewuwcFzR2Uf1D_ck7MmTrt93n5BKLYGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077887368315-kf2mv79higd0c5ap8tadetd9qk8ts519.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
